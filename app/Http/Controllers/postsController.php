@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\comments;
+use App\Models\image;
 use App\Models\posts;
 use App\Models\user;
 use Facade\FlareClient\View;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Scopes\DeletedAdminScope;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Storage;
 
 //use Illuminate\Support\Facades\DB;
 
@@ -63,7 +65,8 @@ class postsController extends Controller
 
         $request->validate([
             'title' => 'required|min:5|max:100',
-            'content' => 'required|min:5|max:100'
+            'content' => 'required|min:5|max:100',
+            'thumbnail' => 'image|mimes:jpg,jpeg,png,gif,svg|max:2048|dimensions:min_height=500'
         ]);
 
         $post = new posts();
@@ -71,6 +74,14 @@ class postsController extends Controller
         $post->content = $request->input('content');
         $post->user_id = Auth::id();
         $post->save();
+
+        if ( $request->hasFile('image')) {
+            $path = $request->file('image')->store('post_images');
+            $post->image()->save(
+                image::create(['path' => $path])
+            );
+            
+        }
 
         $request->session()->flash('status','posts created succesfully!');
 
@@ -88,9 +99,11 @@ class postsController extends Controller
     public function show($id)
     {
 
-        $post = cache::remember('post-{$id}',60,function() use($id){
-            return posts::with('comments', 'tags', 'user','comments.user')->findOrFail($id);
-        });
+        // $post = cache::remember('post-{$id}',60,function() use($id){
+        //     return posts::with('comments', 'tags', 'user','comments.user')->findOrFail($id);
+        // });
+
+        $post =posts::with('comments', 'tags', 'user','comments.user')->findOrFail($id);
 
         return view('posts.show', ['post' => $post ]);
     }
@@ -125,13 +138,28 @@ class postsController extends Controller
     {
         $request->validate([
             'title' => 'required|min:5|max:100',
-            'content' => 'required|min:5|max:100'
+            'content' => 'required|min:5|max:100',
+            'thumbnail' => 'image|mimes:jpg,jpeg,png,gif,svg|max:2048|dimensions:min_height=500'
         ]);
 
         $post = posts::findOrFail($id);
         $post->title = $request->input('title');
         $post->content = $request->input('content');
         $post->save();
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('post_images');
+
+            if ($post->image) {
+                Storage::delete($post->image->path);
+                $post->image->path = $path;
+                $post->image->save();
+            } else {
+                $post->image()->save(
+                    Image::create(['path' => $path])
+                );
+            }
+        }
 
         $request->session()->flash('status','posts updated succesfully!');
         

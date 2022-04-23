@@ -6,11 +6,27 @@
     <div class="container">
         <div class="row">
             <div class="col-8">
-                <div>
+                {{-- <div>
                     <h3>{{ $post->title }}</h3>
                     <x-badge type='success' show='{{ $post->created_at->diffInMinutes() < 40 }}'>new</x-badge>
                 </div>
-                <br>
+                <br> --}}
+
+                @if($post->image)
+                <div style="background-image: url('{{ $post->image->url() }}'); min-height: 500px; color: white; text-align: center; background-attachment: fixed; background-size:contain">
+                    <h1 style="padding-top: 100px; text-shadow: 1px 2px #000">
+                @else
+                    <h1>
+                @endif
+                    {{ $post->title }}
+                    <x-badge type='success' show='{{ $post->created_at->diffInMinutes() < 40 }}'>new post</x-badge>
+                @if($post->image)    
+                    </h1>
+                </div>
+                @else
+                    </h1>
+                @endif
+
                 <p>{{ $post->content }}</p>
                 {{-- <p>Added {{$post->created_at->diffForHumans()}}</p> --}}
                 <x-updated date="{{ $post->created_at }}" name="{{ $post->user->name }}"></x-updated>

@@ -26,6 +26,10 @@ class posts extends Model
         return $this->belongsToMany('App\Models\Tags','posts_tags','post_id','tag_id')->withTimestamps();
     }
 
+    public function image(){
+        return $this->hasOne('App\Models\image');
+    }
+
     public function scopeMostCommented(Builder $query){
         return $query->withCount('comments')->orderBy('comments_count','DESC');
     }
