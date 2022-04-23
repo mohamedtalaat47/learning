@@ -37,7 +37,7 @@ class postsController extends Controller
         
 
         return view('posts.index', [
-            'posts' => posts::withCount('comments')->with('user')->with('tags')->latest('id')->get(),
+            'posts' => posts::latestWithRelations()->get(),
         ]);
 
     }
@@ -89,7 +89,7 @@ class postsController extends Controller
     {
 
         $post = cache::remember('post-{$id}',60,function() use($id){
-            return posts::with('comments')->findOrFail($id);
+            return posts::with('comments', 'tags', 'user','comments.user')->findOrFail($id);
         });
 
         return view('posts.show', ['post' => $post ]);

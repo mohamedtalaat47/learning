@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+
 
 class commentsFactory extends Factory
 {
@@ -15,6 +17,7 @@ class commentsFactory extends Factory
     {
         return [
             'content' => $this->faker->realText(),
+            'user_id' => User::all()->random()->id,
         ];
     }
 }

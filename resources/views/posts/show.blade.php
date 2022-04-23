@@ -6,7 +6,10 @@
     <div class="container">
         <div class="row">
             <div class="col-8">
-                <h3>{{ $post->title }}</h3>
+                <div>
+                    <h3>{{ $post->title }}</h3>
+                    <x-badge type='success' show='{{ $post->created_at->diffInMinutes() < 40 }}'>new</x-badge>
+                </div>
                 <br>
                 <p>{{ $post->content }}</p>
                 {{-- <p>Added {{$post->created_at->diffForHumans()}}</p> --}}
@@ -14,12 +17,15 @@
                 <x-updated date="{{ $post->updated_at }}">Last updated</x-updated>
                 <x-tags :tags="$post->tags" />
 
-                <x-badge type='success' show='{{ $post->created_at->diffInMinutes() < 40 }}'>new</x-badge>
+                
+
+                <h3>Comments</h3>
+                @include('comments._form')
 
                 @forelse ($post->comments as $comment)
                     <p>{{ $comment->content }} </p>
                     {{-- <p>added {{$comment->created_at->diffForHumans()}}</p> --}}
-                    <x-updated date="{{ $comment->created_at }}"></x-updated>
+                    <x-updated date="{{ $comment->created_at }}" name="{{ $comment->user->name }}"></x-updated>
 
                     <hr>
                 @empty

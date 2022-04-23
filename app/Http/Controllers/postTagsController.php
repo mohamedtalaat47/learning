@@ -12,7 +12,9 @@ class postTagsController extends Controller
         $tag = Tags::findOrFail($tag);
 
         return view('posts.index', [
-            'posts' => $tag->posts, 
+            'posts' => $tag->posts()
+            ->latestWithRelations()
+            ->get(), 
         ]);
     }
 }

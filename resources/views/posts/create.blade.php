@@ -18,14 +18,11 @@
         <textarea class=" form-control" id="content"  name="content" id="" cols="30" rows="10">{{old('content')}}</textarea>
         <br>
 
+        <x-errors></x-errors>
+        
         <button class="btn btn-dark btn-block" type="submit" name="submit">create</button>
 
-        @if ($errors->any())
-        @foreach ($errors->all() as $error)
-            <div>{{$error}}</div>
-        @endforeach
-            
-        @endif
+        
 
     </form>
 </div>

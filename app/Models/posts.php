@@ -27,7 +27,11 @@ class posts extends Model
     }
 
     public function scopeMostCommented(Builder $query){
-        return $query->withCount('comments')->orderBy('comments_count','desc');
+        return $query->withCount('comments')->orderBy('comments_count','DESC');
+    }
+
+    public function scopelatestWithRelations(Builder $query){
+        return $query->withCount('comments')->with('user')->with('tags')->latest('id');
     }
 
     public static function boot(){
@@ -36,12 +40,13 @@ class posts extends Model
         static::deleting(function(posts $posts){
 
             $posts->comments()->delete();
+            Cache::tags(['post'])->forget('post-{$id}');
 
         });
 
         static::updating(function(posts $posts){
 
-            Cache::forget('post-{$id}');
+            Cache::tags(['post'])->forget('post-{$id}');
 
         });
 
