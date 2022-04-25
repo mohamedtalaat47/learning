@@ -5,6 +5,7 @@ use App\Http\Controllers\postsController;
 use App\Http\Controllers\homeController;
 use App\Http\Controllers\postTagsController;
 use App\Http\Controllers\commentsController;
+use App\Http\Controllers\userController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,9 +33,10 @@ Route::get('/', function(){
 
 Route::get('/about', [AboutController::class,'index']);
 
-
 Route::resource('posts', postsController::class);
 
 Route::get('/posts/tag/{tag}',[postTagsController::class,'index'])->name('posts.tags.index');
 
 Route::resource('posts.comments', commentsController::class)->only(['store']);
+
+Route::resource('user', userController::class)->only(['show','edit','update']);

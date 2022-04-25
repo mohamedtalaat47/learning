@@ -27,7 +27,7 @@ class posts extends Model
     }
 
     public function image(){
-        return $this->hasOne('App\Models\image');
+        return $this->morphOne('App\Models\image','imageable');
     }
 
     public function scopeMostCommented(Builder $query){

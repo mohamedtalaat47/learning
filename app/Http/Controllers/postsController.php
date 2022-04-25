@@ -78,7 +78,7 @@ class postsController extends Controller
         if ( $request->hasFile('image')) {
             $path = $request->file('image')->store('post_images');
             $post->image()->save(
-                image::create(['path' => $path])
+                image::make(['path' => $path])
             );
             
         }
@@ -156,7 +156,7 @@ class postsController extends Controller
                 $post->image->save();
             } else {
                 $post->image()->save(
-                    Image::create(['path' => $path])
+                    Image::make(['path' => $path])
                 );
             }
         }

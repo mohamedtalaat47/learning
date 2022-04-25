@@ -14,6 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+            'App\Models\User' => 'App\Policies\userPolicy',
     ];
 
     /**
@@ -35,6 +36,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('posts.update','App\Policies\postsPolicy@update');
         Gate::define('posts.delete','App\Policies\postsPolicy@delete');
+        
 
 
         Gate::before(function($user,$ability){
