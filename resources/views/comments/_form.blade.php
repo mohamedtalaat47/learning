@@ -9,10 +9,10 @@
             
             <x-errors></x-errors>
             
-            <button type="submit" class="btn btn-primary btn-block mt-2">Add comment</button>
+            <button type="submit" class="btn btn-primary btn-block mt-2">{{__("Add")}}</button>
         </form>
     @else
-        <a href="{{ route('login') }}">Sign-in</a> to post comments!
+        <a href="{{ route('login') }}">{{__("Sign-in")}}</a> {{__("to post comments!")}}
     @endauth
     </div>
     <hr/> 

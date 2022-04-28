@@ -25,21 +25,21 @@
                 <x-tags :tags="$post->tags" />
 
                 @if ($post->comments_count)
-                    <p>{{ $post->comments_count }} comments</p>
+                    <p>{{ $post->comments_count }} {{__("Comments")}}</p>
                 @else
-                    <p>no comments yet!</p>
+                    <p>{{__("No comments yet!")}}</p>
                 @endif
 
                 <div class="my-3 d-flex">
                     @can('posts.update', $post)
-                        <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-primary">Edit</a>
+                        <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-primary">{{__("Edit")}}</a>
                     @endcan
                     @can('posts.delete', $post)
                         <form action="{{ route('posts.destroy', $post->id) }}" method="post">
                             @csrf
                             @method('DELETE')
 
-                            <input class="btn btn-danger" type="submit" value="Delete">
+                            <input class="btn btn-danger" type="submit" value="{{__("Delete!")}}">
 
                         </form>
                     @endcan
@@ -51,7 +51,7 @@
                 <hr>
             @endforeach
             @empty($posts->count())
-                <h3>no posts yet</h3>
+                <h3>{{__("No blog posts yet!")}}</h3>
             @endempty
 
 

@@ -24,6 +24,13 @@ class User extends Authenticatable
         'password',
     ];
 
+    public const LOCALES = [
+        'en' => 'English',
+        'es' => 'Español',
+        'de' => 'Deutsch',
+        'ar' => 'العربيه'
+    ];
+
     /**
      * The attributes that should be hidden for serialization.
      *

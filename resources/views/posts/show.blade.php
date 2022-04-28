@@ -30,12 +30,12 @@
                 <p>{{ $post->content }}</p>
                 {{-- <p>Added {{$post->created_at->diffForHumans()}}</p> --}}
                 <x-updated date="{{ $post->created_at }}" name="{{ $post->user->name }}"></x-updated>
-                <x-updated date="{{ $post->updated_at }}">Last updated</x-updated>
+                <x-updated date="{{ $post->updated_at }}">{{__("Updated")}}</x-updated>
                 <x-tags :tags="$post->tags" />
 
                 
 
-                <h3>Comments</h3>
+                <h3>{{__("Comments")}}</h3>
                 @include('comments._form')
 
                 @forelse ($post->comments as $comment)
@@ -45,7 +45,7 @@
 
                     <hr>
                 @empty
-                    <p>no comments yet!</p>
+                    <p>{{__("No comments yet!")}}</p>
                 @endforelse
             </div>
             <div class="col-4">

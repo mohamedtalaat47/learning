@@ -1,6 +1,6 @@
 <p class="text-muted">
-    {{ empty(trim($slot)) ? 'Added ' : $slot }} {{ Carbon\Carbon::parse($date)->diffForHumans() }}
+    {{ empty(trim($slot)) ? __("Added")  : $slot }} {{ Carbon\Carbon::parse($date)->diffForHumans() }}
     @if(isset($name))
-        by {{ $name }}
+        {{__("by")}} {{ $name }}
     @endif
 </p>

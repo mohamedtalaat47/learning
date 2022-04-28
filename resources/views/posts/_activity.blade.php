@@ -1,8 +1,8 @@
 <div class="container">
     <div class="card" style="width: 18rem;">
         <div class="card-body">
-            <h5 class="card-title">Most commented posts</h5>
-            <p class="card-text">What people talk about</p>
+            <h5 class="card-title">{{__("Most Commented")}}</h5>
+            <p class="card-text">{{__("What people are currently talking about")}}</p>
         </div>
         <ul class="list-group list-group-flush">
             @foreach ($mostCommented as $post)
@@ -12,7 +12,7 @@
     </div>
     <div class="card mt-5" style="width: 18rem;">
         <div class="card-body">
-            <h5 class="card-title">Most active users</h5>
+            <h5 class="card-title">{{__("Most Active")}}</h5>
         </div>
         <ul class="list-group list-group-flush">
             @foreach ($mostPosts as $user)
@@ -22,7 +22,7 @@
     </div>
     <div class="card mt-5" style="width: 18rem;">
         <div class="card-body">
-            <h5 class="card-title">Most active users last Month</h5>
+            <h5 class="card-title">{{__("Most Active Last Month")}}</h5>
         </div>
         <ul class="list-group list-group-flush">
             @foreach ($mostPostsLastMonth as $user)

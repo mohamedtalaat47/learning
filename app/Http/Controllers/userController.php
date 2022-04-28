@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\image;
 use App\Models\user;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class userController extends Controller
 {
@@ -75,7 +76,11 @@ class userController extends Controller
     public function update(Request $request, user $user)
     {
         $request->validate([
-            'avatar' => 'image|mimes:jpg,jpeg,png,gif,svg|max:1024|dimensions:width=128,height=128'
+            'avatar' => 'image|mimes:jpg,jpeg,png,gif,svg|max:1024|dimensions:width=128,height=128',
+            'locale' => [
+                'required',
+                Rule::in(array_keys(User::LOCALES))
+            ]
         ]);
 
         if ($request->hasFile('avatar')) {
@@ -91,9 +96,12 @@ class userController extends Controller
             }
         }
 
+        $user->locale = $request->get('locale');
+        $user->save();
+
         return redirect()
             ->back()
-            ->withStatus('Profile image was updated!');
+            ->withStatus('Profile was updated!');
     }
 
     /**
