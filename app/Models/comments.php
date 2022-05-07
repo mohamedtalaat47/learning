@@ -15,6 +15,8 @@ class comments extends Model
     
     protected $fillable = ['user_id', 'content'];
 
+    protected $hidden = ['deleted_at','user_id'];
+
     public function post(){
         return $this->belongsTo('App\Models\posts','post_id');
     }

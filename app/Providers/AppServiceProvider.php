@@ -7,6 +7,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
+use App\Http\Resources\comments as CommentResource;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +35,6 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer(['posts.index','posts.show'], ActivityComposer::class);
 
-        // Blade::aliasComponent('components.badge', 'badge');
+        CommentResource::withoutWrapping();
     }
 }
